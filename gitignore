@@ -1,5 +1,8 @@
 # User .gitignore
 
+# Rubymine
+.idea/
+
 # editor swap files
 .redcar
 
