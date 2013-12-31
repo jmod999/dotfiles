@@ -1,0 +1,45 @@
+[core]
+  excludesfile = ~/.gitignore
+  editor = vi
+  autocrlf = false
+  safecrlf = true
+[user]
+  name = Marek Rohon
+  email = marek.rohon@gmail.com
+[alias]
+  co = checkout
+  ci = commit
+  st = status -sb
+  br = branch
+  hist = log --color --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+  visual = gitk
+  unadd = reset HEAD
+  clog = --no-pager log --color --oneline --decorate --graph
+  gap = add --patch
+  c = commit
+  ut = ls-files --others --exclude-standard
+  aa = !git add . && git add -u && git status
+  ll = --no-pager log --stat --abbrev-commit
+  sb = show-branch --color
+  count = shortlog -sn
+  vd = difftool --tool=vimdiff --no-prompt
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%Creset' --abbrev-commit --date=relative
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = !"git lg1"
+[push]
+  default = tracking
+[merge]
+  summary = true
+[diff]
+  external = git_diff_wrapper
+[github]
+  user = mrohon
+
+# [credential]
+#  helper = cache --timeout=86400
+
+[pull]
+  rebase = true

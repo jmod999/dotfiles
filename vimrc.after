@@ -1,0 +1,152 @@
+" Allow for project level .vimrc files
+set exrc
+if filereadable(expand("./.vimrc"))
+  source ./.vimrc
+endif
+
+let s:running_windows = has("win16") || has("win32") || has("win64")
+" general settings
+set number
+set encoding=utf-8
+set t_Co=256
+set showcmd
+" Folding
+set foldenable " Turn on folding
+set foldmethod=marker " Fold on the marker
+set foldmarker={,} " use simple markers
+set foldlevel=100 " Don't autofold anything (but I can still fold manually)
+set foldnestmax=3 " I only like to fold outer functions
+set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
+
+set wildmenu
+set wildmode=list:longest " turn on wild mode huge list
+set wildignore=*.pyo,*.pyc,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png " ignore these
+if s:running_windows
+  set wildignore+=*\\.git\\*,*\\.hg\\*,*\\.svn\\*
+else
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
+endif
+set virtualedit=all
+set visualbell
+set matchtime=1 " how many tenths of a second to blink matching brackets for
+set numberwidth=5 " We are good up to 99999 lines
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+"              | | | | |  |   |      |  |     |    |
+"              | | | | |  |   |      |  |     |    + current column
+"              | | | | |  |   |      |  |     +-- current line
+"              | | | | |  |   |      |  +-- current % into file
+"              | | | | |  |   |      +-- current syntax in square brackets
+"              | | | | |  |   +-- current fileformat
+"              | | | | |  +-- number of lines
+"              | | | | +-- preview flag in square brackets
+"              | | | +-- help flag in square brackets
+"              | | +-- readonly flag in square brackets
+"              | +-- modified flag in square brackets
+"              +-- full path to file in the buffer
+
+" Text Formatting/Layout
+set completeopt=menuone " don't use a pop up menu for completions
+set relativenumber
+set wrap
+set linebreak
+set list
+set textwidth=0
+set listchars=tab:→\ ,trail:·
+set wrapmargin=0
+set autowrite
+set scrolloff=5 " Side Scroll for context
+set sidescrolloff=5 " Keep 5 lines at the size
+set pastetoggle=<F12>
+set history=99999 " big old history
+nnoremap \ :up<cr>
+nnoremap <leader><space> :noh<cr>
+nnoremap j gj
+nnoremap k gk
+
+" These are for running ruby and rubydoctest on current file
+nnoremap <leader>rr :up\|execute "!ruby" shellescape(@%, 1)<CR>
+nnoremap <leader>rdt :up\|execute "!rubydoctest" shellescape(@%, 1)<CR>
+
+" For style offenses
+nnoremap <leader>ruc :up\|execute "!rubocop" shellescape(@%, 1)<CR>
+
+" For easytags
+set tags=./tags;
+let g:easytags_dynamic_files = 2
+let g:easytags_resolve_links = 1
+
+" For ruby autocompletion
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+
+" Trimming whitespace
+nnoremap <leader>ews :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" seeing is believing vim settings
+" Terminal
+nmap <buffer> <F5> <Plug>(seeing-is-believing-run)
+nmap <buffer> <leader>sB <Plug>(seeing-is-believing-run)
+xmap <buffer> <F5> <Plug>(seeing-is-believing-run)
+xmap <buffer> <leader>sB <Plug>(seeing-is-believing-run)
+imap <buffer> <F5> <Plug>(seeing-is-believing-run)
+
+nmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+nmap <buffer> <leader>sb <Plug>(seeing-is-believing-mark)
+xmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+xmap <buffer> <leader>sb <Plug>(seeing-is-believing-mark)
+imap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+
+" Vimwiki mappings
+nmap <leader>vwa :VimwikiAll2HTML<CR> :e<CR>
+
+let wiki = {}
+let diary_header = 'Journal'
+let wiki.path = '~/vimwiki/'
+" VimWiki Code hihglighting
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'ruby': 'ruby', 'vim': 'vim', 'sh': 'bash', 'bash': 'bash'}
+let wiki_use_calendar=1
+let g:vimwiki_list = [wiki]
+"
+" Header for journal
+" TODO Need to make this local to vimwiki files only
+nnoremap <leader>dia !!mdatei= $a ======= [[diary\|Back to Journal]] ======:w
+if has("mouse")
+  set mouse=a " use mouse everywhere
+  set ttymouse=xterm2 " makes it work in everything
+endif
+
+" But only allow shell write commands if they belong to me
+set secure
+
+" Transparent editing of gpg encrypted files.
+" By Wouter Hanegraaff
+augroup encrypted
+  au!
+
+  " First make sure nothing is written to ~/.viminfo while editing
+  " an encrypted file.
+  autocmd BufReadPre,FileReadPre *.gpg set viminfo=
+  " We don't want a swap file, as it writes unencrypted data to disk
+  autocmd BufReadPre,FileReadPre *.gpg set noswapfile
+
+  " Switch to binary mode to read the encrypted file
+  autocmd BufReadPre,FileReadPre *.gpg set bin
+  autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
+  " (If you use tcsh, you may need to alter this line.)
+  autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
+
+  " Switch to normal mode for editing
+  autocmd BufReadPost,FileReadPost *.gpg set nobin
+  autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
+  autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+
+  " Convert all text to encrypted text before writing
+  " (If you use tcsh, you may need to alter this line.)
+  autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
+  " Undo the encryption so we are back in the normal text, directly
+  " after the file has been written.
+  autocmd BufWritePost,FileWritePost *.gpg u
+augroup END

@@ -1,0 +1,1 @@
+/Users/marekrohon/.vim/janus/vim/vimrc
