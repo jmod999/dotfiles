@@ -70,6 +70,10 @@ nnoremap <leader>rdt :up\|execute "!rubydoctest" shellescape(@%, 1)<CR>
 " For style offenses
 nnoremap <leader>ruc :up\|execute "!rubocop" shellescape(@%, 1)<CR>
 
+" This will remove trailing whitespace
+nnoremap <leader>ews :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+
 " For easytags
 set tags=./tags;
 let g:easytags_dynamic_files = 2

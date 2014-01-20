@@ -18,21 +18,27 @@ call janus#add_group("colors")
 
 ""
 "" Customisations
-""
+set winwidth=84 
+set winheight=5
+set winminheight=5
+set winheight=999
+set number
+
+"" switcher between paste and nonpaste mode 
+set pastetoggle=<F10> 
+
+"" cut/copy text in visual mode to the operating system clipboard 
+vmap <C-x> :!pbcopy<CR>  
+vmap <C-c> :w !pbcopy<CR><CR>
 
 if filereadable(expand("~/.vimrc.before"))
   source ~/.vimrc.before
 endif
 
-
 " Disable plugins prior to loading pathogen
-exe 'source ' . g:janus_vim_path . '/core/plugins.vim'
-
-""
-"" Pathogen setup
-""
+exec 'source ' . g:janus_vim_path . '/core/plugins.vim'
 
 " Load all groups, custom dir, and janus core
 call janus#load_pathogen()
 
-" .vimrc.after is loaded after the plugins have loaded
+ .vimrc.after is loaded after the plugins have loaded

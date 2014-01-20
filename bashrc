@@ -12,6 +12,9 @@ export RSPEC=true
 export BUNDLER_EDITOR=vim
 export EDITOR=vim
 
+# Postgres 
+export PGHOST=localhost
+
 #### PS1 customization ####
 NONE="\[\033[0m\]"    # unsets color to term fg color
 
@@ -126,13 +129,15 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+# alias for rails webrick server 
+alias show_webrick='lsof -wni tcp:3000' 
+
 # for mac address manipulation
 alias random_mac='sudo ifconfig eth0 ether `openssl rand -hex 6 | sed "s/\(..\)/\1:/g; s/.$//"`'
 alias restore_mac='sudo ifconfig eth0 ether 00:15:c5:3e:81:9e'
 alias mac_gen='openssl rand -hex 6 | sed "s/\(..\)/\1:/g; s/.$//"'
 
 # For ssh-agent
-
 SSH_ENV="$HOME/.ssh/environment"
 
 # start the ssh-agent

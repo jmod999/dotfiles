@@ -8,6 +8,11 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
+
+alias gvim='/usr/local/bin/mvim -g'
+alias vi='/usr/local/bin/mvim'
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists

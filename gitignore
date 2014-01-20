@@ -75,3 +75,8 @@ wiki/
 *.dot
 *.svg
 *.png
+
+# neo4j project 
+db/neo4j-development/
+public/assets/
+
