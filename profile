@@ -9,9 +9,13 @@
 #umask 022
 
 export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
+export BUNDLER_EDITOR=vi
+export QWANDRY_EDITOR=vi
 
 alias gvim='/usr/local/bin/mvim -g'
 alias vi='/usr/local/bin/mvim'
+alias mysqlstart='sudo mysqld_safe --skip-grant-tables'
+alias mysqlstop='sudo /usr/local/mysql/support-files/mysql.server stop'
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then

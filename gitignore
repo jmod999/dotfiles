@@ -2,6 +2,8 @@
 
 # Rubymine
 .idea/
+*/.idea/workspace.xml
+**/.idea/workspace.xml
 
 # editor swap files
 .redcar
@@ -79,4 +81,8 @@ wiki/
 # neo4j project 
 db/neo4j-development/
 public/assets/
+db/neo4j-test/
+
+# rails projects
+log/development.log
 

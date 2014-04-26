@@ -1,11 +1,11 @@
 [core]
-  excludesfile = ~/.gitignore
+	excludesfile = ~/gitignore_global
   editor = vi
   autocrlf = false
   safecrlf = true
 [user]
-  name = Marek Rohon
-  email = marek.rohon@gmail.com
+	name = Marek Rohon
+	email = marek.rohon@gmail.com
 [alias]
   co = checkout
   ci = commit
@@ -43,3 +43,9 @@
 
 [pull]
   rebase = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
