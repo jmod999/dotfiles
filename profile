@@ -12,10 +12,16 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
 export BUNDLER_EDITOR=vi
 export QWANDRY_EDITOR=vi
 
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib:$DYLD_LIBRARY_PATH
+export PATH=/usr/local/bin/npm:$PATH
+export MONGODB_PATH=/usr/local/Cellar/mongodb/2.4.9/bin:$MONGODB_PATH
+export PSQL = /usr/local/bin/psql:$PSQL
+
 alias gvim='/usr/local/bin/mvim -g'
 alias vi='/usr/local/bin/mvim'
 alias mysqlstart='sudo mysqld_safe --skip-grant-tables'
 alias mysqlstop='sudo /usr/local/mysql/support-files/mysql.server stop'
+alias myip='ifconfig |grep inet'
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
